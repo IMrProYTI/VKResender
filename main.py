@@ -29,7 +29,7 @@ for event in longpoll.listen():
 		listEmbeds = []
 
 		for attachment in event.object.attachments:
-			if attachment.type == 'image':
+			if attachment.get('type') == 'photo':
 				embed = Embed(color=0xFFFFFF)
 				url = attachment.get('photo').get('orig_photo').get('url')
 				embed.set_image(url)
