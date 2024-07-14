@@ -14,7 +14,7 @@ webhook = Webhook(
 )
 
 for event in longpoll.listen():
-	if event.type	== VkBotEventType.WALL_POST_NEW:
+	if event.type	== VkBotEventType.WALL_POST_NEW and event.object.post_type == 'post':
 		title = str("Новый пост в группе ВКонтакте!")
 		description = str(event.object.text)
 		url = f"https://vk.com/club{event.group_id}?w=wall-{event.group_id}_{event.object.id}"
@@ -38,6 +38,3 @@ for event in longpoll.listen():
 			webhook.send( embeds=[ mainEmbed, *listEmbeds ] )
 		except Exception:
 			print(Exception)
-
-
-		
