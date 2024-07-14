@@ -28,11 +28,12 @@ for event in longpoll.listen():
 
 		listEmbeds = []
 
-		for image in event.object.attachments:
-			embed = Embed(color=0xFFFFFF)
-			url = image.get('photo').get('orig_photo').get('url')
-			embed.set_image(url)
-			listEmbeds.append(embed)
+		for attachment in event.object.attachments:
+			if attachment.type == 'image':
+				embed = Embed(color=0xFFFFFF)
+				url = attachment.get('photo').get('orig_photo').get('url')
+				embed.set_image(url)
+				listEmbeds.append(embed)
 
 		try:
 			webhook.send( embeds=[ mainEmbed, *listEmbeds ] )
