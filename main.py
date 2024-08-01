@@ -2,6 +2,7 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from dhooks import Embed, Webhook
 import vk_api
 
+from regex import VK2MD
 import config
 
 vk_session = vk_api.VkApi(token=config.ACCESS_TOKEN)
@@ -16,7 +17,7 @@ webhook = Webhook(
 for event in longpoll.listen():
 	if event.type	== VkBotEventType.WALL_POST_NEW and event.object.post_type == 'post':
 		title = str("Новый пост в группе ВКонтакте!")
-		description = str(event.object.text)
+		description = VK2MD(str(event.object.text))
 		url = f"https://vk.com/public{event.group_id}?w=wall-{event.group_id}_{event.object.id}"
 
 		mainEmbed = Embed(
